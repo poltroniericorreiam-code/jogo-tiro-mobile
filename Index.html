@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+    bullets.forEach((b,bi)=>{
+      const dx = b.x-e.x;
+      const dy = b.y-e.y;
+      const dist = Math.sqrt(dx*dx+dy*dy);
+
+      if(dist < e.size){
+        enemies.splice(ei,1);
+        bullets.splice(bi,1);
+        score += 10;
+        scoreTxt.innerText = score;
+      }
+    });
+
+    const pdx = player.x-e.x;
+    const pdy = player.y-e.y;
+    const pdist = Math.sqrt(pdx*pdx+pdy*pdy);
+
+    if(pdist < 40){
+      enemies.splice(ei,1);
+      vida -= 10;
+      vidaTxt.innerText = vida;
+    }
+  });
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle='cyan';
+  ctx.beginPath();
+  ctx.arc(player.x,player.y,20,0,Math.PI*2);
+  ctx.fill();
+
+  ctx.strokeStyle='red';
+  ctx.beginPath();
+  ctx.arc(aimX,aimY,15,0,Math.PI*2);
+  ctx.stroke();
+
+  bullets.forEach(b=>{
+    ctx.fillStyle='yellow';
+    ctx.beginPath();
+    ctx.arc(b.x,b.y,5,0,Math.PI*2);
+    ctx.fill();
+  });
+
+  enemies.forEach(e=>{
+    ctx.fillStyle='red';
+    ctx.beginPath();
+    ctx.arc(e.x,e.y,e.size,0,Math.PI*2);
+    ctx.fill();
+  });
+}
+
+function loop(){
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+</body>
+      </html>
